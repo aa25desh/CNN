@@ -30,21 +30,25 @@ Tile Size:
 I have use 32, 16, 8 for tile size and got the best results for 8 overall.
 
 
-[u1369232@kp362:cnn_assignment]$  ./cnn-gpu 1 3 64 112 112 3 3 2 2
+./cnn-gpu 1 3 64 112 112 3 3 2 2
 N = 1, C = 3, K = 64, H = 112, W = 112, R = 3, S = 3, u = 2, v = 2, P = 55, Q = 55 
+
 Sequential time = 44.835968, Parallel time = 0.051488, Speedup = 870.804199
 
-[u1369232@kp362:cnn_assignment]$ ./cnn-gpu 128 3 64 112 112 3 3 2 2
+./cnn-gpu 128 3 64 112 112 3 3 2 2
 N = 128, C = 3, K = 64, H = 112, W = 112, R = 3, S = 3, u = 2, v = 2, P = 55, Q = 55 
+
 Sequential time = 5752.332520, Parallel time = 7.202400, Speedup = 798.668823
 
 
-[u1369232@kp362:cnn_assignment]$ ./cnn-gpu 1 832 128 7 7 1 1 1 1
+./cnn-gpu 1 832 128 7 7 1 1 1 1
 N = 1, C = 832, K = 128, H = 7, W = 7, R = 1, S = 1, u = 1, v = 1, P = 7, Q = 7 
+
 Sequential time = 58.108768, Parallel time = 0.302752, Speedup = 191.935211
 
-[u1369232@kp362:cnn_assignment]$ ./cnn-gpu 128 832 128 7 7 1 1 1 1
+./cnn-gpu 128 832 128 7 7 1 1 1 1
 N = 128, C = 832, K = 128, H = 7, W = 7, R = 1, S = 1, u = 1, v = 1, P = 7, Q = 7 
+
 Sequential time = 7429.266602, Parallel time = 9.868544, Speedup = 752.822998
 
 ## Loop Unrolling:
@@ -59,12 +63,14 @@ sum =  sum + d_input[ _i+ c*H*W] * d_weight[_w+c*R*S] +
 
         d_input[ _i+ (c+31)*H*W] * d_weight[_w+(c+31)*R*S];
 
-[u1369232@kp361:cnn_assignment]$ ./cnn-gpu 1 832 128 7 7 1 1 1 1
+./cnn-gpu 1 832 128 7 7 1 1 1 1
 N = 1, C = 832, K = 128, H = 7, W = 7, R = 1, S = 1, u = 1, v = 1, P = 7, Q = 7 
+
 Sequential time = 58.815266, Parallel time = 0.053376, Speedup = 1101.904663
 
-[u1369232@kp361:cnn_assignment]$ ./cnn-gpu 128 832 128 7 7 1 1 1 1
+./cnn-gpu 128 832 128 7 7 1 1 1 1
 N = 128, C = 832, K = 128, H = 7, W = 7, R = 1, S = 1, u = 1, v = 1, P = 7, Q = 7 
+
 Sequential time = 7489.583984, Parallel time = 7.545504, Speedup = 992.588928
 
 ## Loop permutation:
