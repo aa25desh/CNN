@@ -10,9 +10,11 @@
 
 ## Data Access:
 
-input[n*C*H*W + c*H*W + h*W + w] = input[n][c][h][w]
-weight[k*C*R*S + c*R*S + r*S + s] = weight[k][c][r][s]
-output_seq[n*K*P*Q + k*P*Q + p*Q + q] = output_seq[n][k][p][q]  P = (H-R)/u + 1;  int Q = (W-S)/v + 1;  
+`input[n*C*H*W + c*H*W + h*W + w] = input[n][c][h][w]`
+
+`weight[k*C*R*S + c*R*S + r*S + s] = weight[k][c][r][s]`
+
+`output_seq[n*K*P*Q + k*P*Q + p*Q + q] = output_seq[n][k][p][q]`
 
 ## Main Optimization: 
 
@@ -56,12 +58,14 @@ Sequential time = 7429.266602, Parallel time = 9.868544, Speedup = 752.822998
 please see the kernel unroll1_cnn in the comments.
 I did loop unrolling for the filter loops and got better results for input (128/1 832 128 7 7 1 1 1 1)
 
-int _i = n*C*H*W + (ij1)*W + ii1;
-int _w = k*C*R*S;
-sum =  sum + d_input[ _i+ c*H*W] * d_weight[_w+c*R*S] + 
-        d_input[ _i+ (c+1)*H*W] * d_weight[_w+(c+1)*R*S]...
+`int _i = n*C*H*W + (ij1)*W + ii1;`
 
-        d_input[ _i+ (c+31)*H*W] * d_weight[_w+(c+31)*R*S];
+`int _w = k*C*R*S;`
+
+`sum =  sum + d_input[ _i+ c*H*W] * d_weight[_w+c*R*S] + 
+        d_input[ _i+ (c+1)*H*W] * d_weight[_w+(c+1)*R*S]...`
+
+        `d_input[ _i+ (c+31)*H*W] * d_weight[_w+(c+31)*R*S];`
 
 ./cnn-gpu 1 832 128 7 7 1 1 1 1
 N = 1, C = 832, K = 128, H = 7, W = 7, R = 1, S = 1, u = 1, v = 1, P = 7, Q = 7 
